@@ -45,6 +45,8 @@ export class BookingService {
       dto.department,
     );
 
+    await this.validateNoOverlappingBooking(dto.locationId, startTime, endTime);
+
     const booking = this.bookingRepository.create({
       locationId: dto.locationId,
       department: dto.department,
@@ -102,6 +104,13 @@ export class BookingService {
       endTime,
       finalAttendees,
       finalDepartment,
+    );
+
+    await this.validateNoOverlappingBooking(
+      booking.locationId,
+      startTime,
+      endTime,
+      booking.id,
     );
 
     Object.assign(booking, {
@@ -175,6 +184,35 @@ export class BookingService {
     }
   }
 
+  private async validateNoOverlappingBooking(
+    locationId: string,
+    newStartTime: Date,
+    newEndTime: Date,
+    ignoreBookingId?: string,
+  ): Promise<void> {
+    const qb = this.bookingRepository
+      .createQueryBuilder('booking')
+      .where('booking.locationId = :locationId', { locationId })
+      .andWhere('booking.isDeleted = :isDeleted', { isDeleted: false })
+      .andWhere('booking.startTime < :newEndTime', { newEndTime })
+      .andWhere('booking.endTime > :newStartTime', { newStartTime });
+
+    if (ignoreBookingId) {
+      qb.andWhere('booking.id <> :ignoreBookingId', { ignoreBookingId });
+    }
+
+    const exists = await qb.getExists();
+
+    if (exists) {
+      this.logger.warn(
+        `Booking validation failed: time conflicts with an existing booking for location ${locationId}`,
+      );
+      throw new BadRequestException(
+        'Booking time conflicts with an existing booking for this location',
+      );
+    }
+  }
+
   private validateBookingForLocation(
     location: Location,
     startTime: Date,
@@ -182,7 +220,7 @@ export class BookingService {
     attendees: number,
     department?: string,
   ): void {
-    if (location.capacity && attendees > location.capacity) {
+    if (location.capacity != undefined && attendees > location.capacity) {
       this.logger.warn(
         `Booking validation failed: attendees (${attendees}) exceeds capacity (${location.capacity})`,
       );
