@@ -1,6 +1,6 @@
 import { Location } from './location.entity';
 import { LocationResponseDto } from './dto/location-response.dto';
-import { OpenTimeDto, WeekDay } from './dto/open-time.dto';
+import { OpenTimeDto } from './dto/open-time.dto';
 
 function toOpenTimeDto(
   openTime: Location['openTime'],
@@ -8,7 +8,7 @@ function toOpenTimeDto(
   if (!openTime) return undefined;
 
   return {
-    days: openTime.days as WeekDay[] | undefined,
+    days: openTime.days,
     startTime: openTime.startTime,
     endTime: openTime.endTime,
   };

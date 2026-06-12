@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {
   IsArray,
   IsIn,
@@ -30,7 +29,13 @@ export interface IOpenTime {
 
 @ValidatorConstraint({ name: 'OpenTimeTimePair', async: false })
 export class OpenTimeTimePairValidator implements ValidatorConstraintInterface {
-  validate(value: OpenTimeDto | undefined, args: ValidationArguments): boolean {
+  validate(
+    value: OpenTimeDto | undefined,
+    _args: ValidationArguments,
+  ): boolean {
+    // ValidationArguments is unused; prefix with underscore to satisfy lint.
+    void _args;
+
     if (!value) return true;
 
     const hasStartTime = !!value.startTime;
