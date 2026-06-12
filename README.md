@@ -91,7 +91,7 @@ npm run seed
 5. Start the application:
 
 ```bash
-npm run start:dev
+npm run start
 ```
 
 Swagger UI:
@@ -194,6 +194,7 @@ Swagger UI is available at:
 ```text
 http://localhost:3000/api
 ```
+![image](https://res.cloudinary.com/dejteftxn/image/upload/v1781235272/image_xclmy7.png)
 
 ## Future Improvements
 
