@@ -1,98 +1,209 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Booking Location API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+RESTful API for managing hierarchical building locations and room bookings.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project was developed as part of the SJ Assignment 2026 and is built with NestJS, TypeScript, TypeORM, and PostgreSQL.
 
-## Description
+## Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Location Management
 
-## Project setup
+- Create, read, update, and delete locations
+- Support hierarchical location structures (Building → Floor → Room)
+- Retrieve locations as a tree structure
+- Soft-delete support
 
-```bash
-$ npm install
+### Booking Management
+
+- Create, read, update, and delete bookings
+- Department validation
+- Capacity validation
+- Open-time validation
+- Booking overlap detection
+- Soft-delete support
+
+### Technical Features
+
+- Swagger API documentation
+- DTO validation using class-validator
+- Global exception handling
+- Logging using NestJS Logger
+- PostgreSQL persistence via TypeORM
+
+## Technology Stack
+
+- Node.js
+- NestJS
+- TypeScript
+- PostgreSQL
+- TypeORM
+- Docker & Docker Compose
+- Swagger (OpenAPI)
+
+## Documentation
+
+Additional project documentation can be found in:
+
+- [System Design](./docs/SYSTEM_DESIGN.md)
+- [Database Design](./docs/DATABASE.md)
+
+## Quick Start
+
+### Prerequisites
+
+- Docker
+- Docker Compose
+- Node.js 22+
+- npm
+
+### Setup
+
+1. Create a `.env` file in the project root:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_DATABASE=booking_location
+
+PORT=3000
 ```
 
-## Compile and run the project
+2. Start PostgreSQL with Docker:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+docker-compose up -d
 ```
 
-## Run tests
+3. Install dependencies:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+4. Seed sample data (optional):
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run seed
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+5. Start the application:
 
-## Resources
+```bash
+npm run start:dev
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+Swagger UI:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```text
+http://localhost:3000/api
+```
 
-## Support
+## Seed Data
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+The optional seed script creates a sample location hierarchy and bookings to demonstrate the application's business rules.
 
-## Stay in touch
+### Locations
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```text
+Headquarters
+├── Floor 1
+│   ├── EFM Meeting Room
+│   └── IT Collaboration Room
+└── Floor 2
+    └── Executive Board Room
 
-## License
+Operations Center
+└── Floor 5
+    └── HR Interview Room
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Sample Bookings
+
+The seed data includes example bookings that demonstrate:
+
+- Department validation
+- Capacity constraints
+- Open-time restrictions
+- Booking conflict detection
+
+Run the seed script:
+
+```bash
+npm run seed
+```
+
+## Design Decisions
+
+This implementation prioritizes simplicity, readability, and maintainability while satisfying the assignment requirements.
+
+To keep the solution focused and easy to evaluate:
+
+- TypeORM schema synchronization (`synchronize: true`) is used instead of migrations.
+- Authentication and authorization are out of scope.
+- Booking conflict detection is implemented at the application layer.
+- Soft deletion is used to preserve historical records.
+- A small seed dataset is provided for demonstration purposes.
+
+In a production environment, additional concerns such as migrations, authentication, monitoring, caching, and automated testing would be implemented.
+
+## Assumptions
+
+The following assumptions were made during implementation.
+
+### Location Hierarchy
+
+- Locations are organized in a parent-child hierarchy.
+- Any location may have child locations.
+- A location cannot be assigned to itself as a parent.
+- A location with active child locations cannot be deleted.
+
+### Open Time
+
+- Open time is optional.
+- If open time is not defined, the location is considered available at all times.
+- Bookings must fall entirely within the configured open-time window.
+- For locations with open-time restrictions, bookings cannot span multiple calendar days.
+
+### Department Validation
+
+- If a location specifies a department, booking requests must use the same department.
+- If no department is configured for the location, any department may book it.
+
+### Capacity Validation
+
+- Capacity is optional.
+- If capacity is defined, the number of attendees must not exceed it.
+
+### Booking Conflicts
+
+- Two bookings for the same location cannot overlap.
+- Booking intervals are treated as half-open intervals: `[startTime, endTime)`.
+- A booking ending at 10:00 and another starting at 10:00 are allowed.
+
+### Deletion Strategy
+
+- Locations and bookings are soft deleted using the `isDeleted` flag.
+- Historical records are preserved for auditing and future recovery.
+
+## API Documentation
+
+Swagger UI is available at:
+
+```text
+http://localhost:3000/api
+```
+
+## Future Improvements
+
+- Unit and integration test coverage
+- Authentication and authorization
+- TypeORM migrations for controlled schema evolution
+- Structured logging
+- Availability search APIs
+- Booking notifications
+- Audit trail support
+- Caching for location hierarchy queries
+- Database-level constraints for booking conflict prevention
+- Monitoring and observability
